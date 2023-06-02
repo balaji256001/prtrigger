@@ -21,7 +21,7 @@ jobs:
 
   prod-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     steps:
     - name: Deploy to S3 bucket
       run: echo "WELCOME PROD"
