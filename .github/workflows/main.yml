@@ -2,26 +2,26 @@ name: 'Test'
 on:
   pull_request:
     types: [closed]
-    branches: [develop, qa, main]
+    branches: [develop, qa, master]
 
 jobs:
   dev-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.base_ref == 'develop'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'develop'
     steps:
     - name: Deploy to S3 bucket
       run: echo "WELCOME DEVELOP"
   
   qa-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.base_ref == 'qa'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'qa'
     steps:
     - name: Deploy to S3 bucket
       run: echo "WELCOME QA"
 
   prod-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.base_ref == 'main'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     steps:
     - name: Deploy to S3 bucket
       run: echo "WELCOME PROD"
