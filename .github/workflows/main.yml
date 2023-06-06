@@ -14,14 +14,14 @@ jobs:
   
   qa-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'qa'
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'qa'
     steps:
     - name: Deploy to S3 bucket
       run: echo "WELCOME QA"
 
   prod-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'main'
     steps:
     - name: Deploy to S3 bucket
       run: echo "WELCOME PROD"
