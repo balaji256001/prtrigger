@@ -1,9 +1,10 @@
 name: 'Test'
 on:
-  pull_request:
-    types: [closed]
-    branches: [develop, qa, uat, master]
-  workflow_dispatch:
+   if: github.event.pull_request.merged == true && github.base_ref == 'develop'
+    pull_request:
+      types: [closed]
+      branches: [develop, qa, uat, master]
+  
 
 jobs:
   Test-build-deploy:
