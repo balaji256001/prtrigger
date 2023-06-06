@@ -1,9 +1,8 @@
 name: 'Test'
 on:
-   if: github.event.pull_request.merged == true && github.base_ref == 'develop'
-    pull_request:
-      types: [closed]
-      branches: [develop, qa, uat, master]
+ pull_request:
+   types: [closed]
+   branches: [develop, qa, uat, master]
   
 
 jobs:
