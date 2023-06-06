@@ -2,26 +2,33 @@ name: 'Test'
 on:
   pull_request:
     types: [closed]
-    branches: [develop, qa, master]
+    branches: [develop, qa, uat, master]
+  workflow_dispatch:
 
 jobs:
-  dev-deploy:
+  Test-build-deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'develop'
+    
     steps:
-    - name: Deploy to S3 bucket
-      run: echo "WELCOME DEVELOP"
-  
-  qa-deploy:
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'qa'
-    steps:
-    - name: Deploy to S3 bucket
-      run: echo "WELCOME QA"
+    - name: Check out code
+      uses: actions/checkout@v3
 
-  prod-deploy:
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
-    steps:
-    - name: Deploy to S3 bucket
-      run: echo "WELCOME PROD"
+    - name: dev build & deploy
+      if: github.event.pull_request.merged == true && github.base_ref == 'develop'
+      run: |
+            echo "DEV"
+    
+    - name: qa build & deploy
+      if: github.event.pull_request.merged == true && github.base_ref == 'qa' && github.head_ref == 'develop'
+      run: |
+            echo "QA"
+
+    - name: uat build & deploy
+      if: github.event.pull_request.merged == true && github.base_ref == 'uat' && github.head_ref == 'qa'
+      run: |
+            echo "UAT"
+    
+    - name: prod build & deploy
+      if: github.event.pull_request.merged == true && github.base_ref == 'main' && github.head_ref == 'uat'
+      run: |
+            echo "PROD"
